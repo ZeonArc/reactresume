@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     try {
       const fallbackResponse = await axios.get(`https://www.coursedog.com/api/v1/courses?q=${query}`);
       return NextResponse.json(fallbackResponse.data);
-    } catch (fallbackError) {
+    } catch {
       return NextResponse.json(
         { error: 'Failed to fetch courses' },
         { status: 500 }

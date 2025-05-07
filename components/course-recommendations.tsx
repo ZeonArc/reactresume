@@ -6,14 +6,15 @@ import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, BookOpen, Clock, Star } from "lucide-react"
 import { getCourseRecommendations } from "@/lib/course-service"
+import type { ResumeData, Course } from "@/lib/types"
 
 interface CourseRecommendationsProps {
-  data: any
+  data: ResumeData
 }
 
 export function CourseRecommendations({ data }: CourseRecommendationsProps) {
   const [courseCount, setCourseCount] = useState(5)
-  const [courses, setCourses] = useState<any[]>([])
+  const [courses, setCourses] = useState<Course[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const handleGetCourses = async () => {

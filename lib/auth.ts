@@ -5,6 +5,10 @@ import type { User } from "./types"
 // In a real application, this would be a server-side API call
 // For demo purposes, we're using localStorage to simulate authentication
 
+interface StoredUser extends User {
+  password: string;
+}
+
 export async function registerUser(
   firstName: string,
   lastName: string,
@@ -16,15 +20,15 @@ export async function registerUser(
 
   try {
     // Check if user already exists
-    const existingUsers = JSON.parse(localStorage.getItem("users") || "[]")
-    const userExists = existingUsers.some((user: any) => user.email === email)
+    const existingUsers: StoredUser[] = JSON.parse(localStorage.getItem("users") || "[]")
+    const userExists = existingUsers.some((user) => user.email === email)
 
     if (userExists) {
       return false
     }
 
     // Create new user
-    const newUser = {
+    const newUser: StoredUser = {
       id: Date.now(),
       firstName,
       lastName,
@@ -48,8 +52,8 @@ export async function loginUser(email: string, password: string): Promise<User |
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   try {
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
-    const user = users.find((u: any) => u.email === email && u.password === password)
+    const users: StoredUser[] = JSON.parse(localStorage.getItem("users") || "[]")
+    const user = users.find((u) => u.email === email && u.password === password)
 
     if (user) {
       // Store session

@@ -8,16 +8,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Building, MapPin, Briefcase, DollarSign } from "lucide-react"
 import { getJobRecommendations } from "@/lib/job-service"
+import type { ResumeData, Job } from "@/lib/types"
 
 interface JobRecommendationsProps {
-  data: any
+  data: ResumeData
 }
 
 export function JobRecommendations({ data }: JobRecommendationsProps) {
   const [workMode, setWorkMode] = useState("All")
   const [minSalary, setMinSalary] = useState(3000)
   const [jobCount, setJobCount] = useState(6)
-  const [jobs, setJobs] = useState<any[]>([])
+  const [jobs, setJobs] = useState<Job[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const handleFindJobs = async () => {

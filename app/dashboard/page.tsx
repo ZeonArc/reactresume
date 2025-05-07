@@ -10,12 +10,12 @@ import { ResumeUploader } from "@/components/resume-uploader"
 import { ResumeAnalysis } from "@/components/resume-analysis"
 import { JobRecommendations } from "@/components/job-recommendations"
 import { CourseRecommendations } from "@/components/course-recommendations"
-import type { User } from "@/lib/types"
+import type { User, ResumeData } from "@/lib/types"
 
 export default function Dashboard() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
-  const [resumeData, setResumeData] = useState<any>(null)
+  const [resumeData, setResumeData] = useState<ResumeData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Dashboard() {
     router.push("/login")
   }
 
-  const handleResumeAnalyzed = (data: any) => {
+  const handleResumeAnalyzed = (data: ResumeData) => {
     setResumeData(data)
   }
 

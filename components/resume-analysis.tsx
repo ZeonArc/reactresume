@@ -5,9 +5,10 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Briefcase } from "lucide-react"
+import type { ResumeData } from "@/lib/types"
 
 interface ResumeAnalysisProps {
-  data: any
+  data: ResumeData
 }
 
 export function ResumeAnalysis({ data }: ResumeAnalysisProps) {
@@ -76,7 +77,7 @@ export function ResumeAnalysis({ data }: ResumeAnalysisProps) {
       <Card>
         <CardHeader>
           <CardTitle>Target Field</CardTitle>
-          <CardDescription>Based on your skills, we've identified your target field</CardDescription>
+          <CardDescription>Based on your skills, we&apos;ve identified your target field</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center space-x-4">

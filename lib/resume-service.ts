@@ -5,7 +5,8 @@ import type { ResumeData } from "./types"
 // This is a mock service that simulates resume analysis
 // In a real application, this would call a backend API
 
-export async function analyzeResume(formData: FormData): Promise<ResumeData> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function analyzeResume(_formData: FormData): Promise<ResumeData> {
   // Simulate API call delay
   await new Promise((resolve) => setTimeout(resolve, 3000))
 
