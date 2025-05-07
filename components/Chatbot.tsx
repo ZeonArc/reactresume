@@ -52,22 +52,47 @@ export default function Chatbot() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/chatbot', {
+      const systemMessage = 'You are a helpful career advisor and technical mentor.';
+      const userPromptFull = `Based on these skills: ${skills.join(', ')} and this resume: "${resumeText}", 
+      ${requestType === 'project_ideas' 
+        ? 'suggest 3 project ideas that would showcase and improve these skills. For each project, provide a title, brief description, key technologies to use, and learning outcomes.' 
+        : 'provide detailed guidance on how to build a project with these skills. Include steps, resources, and best practices.'}`;
+      
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          skills,
-          resumeText,
-          requestType,
+          messages: [
+            { role: 'system', content: systemMessage },
+            { role: 'user', content: userPromptFull }
+          ]
         }),
       });
 
       const data = await response.json();
       
       if (response.ok) {
-        setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: data.response.content }]);
+        
+        // Store the conversation in Supabase (if needed)
+        try {
+          await fetch('/api/chatbot', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              skills,
+              resumeText,
+              requestType,
+              response: data.response.content
+            }),
+          });
+        } catch (error) {
+          console.error('Error saving to database:', error);
+        }
       } else {
         setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
         console.error('Error:', data.error);
@@ -121,7 +146,7 @@ export default function Chatbot() {
         </div>
       </div>
       
-      <div className="flex flex-col space-y-2">
+      <div>
         <label className="text-sm font-medium">What would you like help with?</label>
         <Select value={requestType} onValueChange={setRequestType}>
           <SelectTrigger>

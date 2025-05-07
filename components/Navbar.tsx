@@ -33,6 +33,17 @@ export default function Navbar() {
           </Link>
           
           <Link 
+            href="/project-ideas" 
+            className={`px-3 py-2 rounded-md text-sm font-medium ${
+              isActive('/project-ideas') 
+                ? 'bg-blue-100 text-blue-800' 
+                : 'text-gray-600 hover:bg-gray-100'
+            }`}
+          >
+            Project Ideas
+          </Link>
+          
+          <Link 
             href="/career-tools" 
             className={`px-3 py-2 rounded-md text-sm font-medium ${
               isActive('/career-tools') 

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "@/hooks/use-toast"
 import { registerUser } from "@/lib/auth"
 
 export default function Register() {
@@ -58,9 +58,9 @@ export default function Register() {
           variant: "destructive",
         })
       }
-    } catch (error) {
+    } catch {
       toast({
-        title: "Error",
+        title: "Registration Error",
         description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       })

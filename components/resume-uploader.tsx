@@ -1,16 +1,17 @@
 "use client"
 
 import type React from "react"
+import type { ResumeData } from "@/lib/types"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "@/hooks/use-toast"
 import { Upload, FileText } from "lucide-react"
 import { analyzeResume } from "@/lib/resume-service"
 
 interface ResumeUploaderProps {
-  onResumeAnalyzed: (data: any) => void
+  onResumeAnalyzed: (data: ResumeData) => void
 }
 
 export function ResumeUploader({ onResumeAnalyzed }: ResumeUploaderProps) {
@@ -86,7 +87,7 @@ export function ResumeUploader({ onResumeAnalyzed }: ResumeUploaderProps) {
       })
 
       onResumeAnalyzed(analysisData)
-    } catch (error) {
+    } catch {
       toast({
         title: "Analysis failed",
         description: "There was an error analyzing your resume. Please try again.",
