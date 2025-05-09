@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import openai from '@/lib/openai';
+import gemini from '@/lib/gemini';
 import { supabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
@@ -30,16 +30,12 @@ export async function POST(request: Request) {
       );
     }
     
-    // Call OpenAI API
-    const completion = await openai.chat.completions.create({
-      messages: [
-        { role: 'system', content: 'You are a helpful career advisor and technical mentor.' },
-        { role: 'user', content: prompt }
-      ],
-      model: 'gpt-3.5-turbo',
-    });
+    // Call Gemini API
+    const systemPrompt = 'You are a helpful career advisor and technical mentor.';
+    const fullPrompt = `${systemPrompt}\n\n${prompt}`;
     
-    const response = completion.choices[0].message.content;
+    const result = await gemini.model.generateContent(fullPrompt);
+    const response = result.response.text();
     
     // Store the conversation in Supabase
     const { error } = await supabase
