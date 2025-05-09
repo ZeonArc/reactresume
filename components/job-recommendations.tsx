@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Building, MapPin, Briefcase, DollarSign } from "lucide-react"
+import { Building, MapPin, Briefcase, DollarSign, RefreshCw } from "lucide-react"
 import { getJobRecommendations } from "@/lib/job-service"
 import type { ResumeData, Job } from "@/lib/types"
 
@@ -21,10 +21,10 @@ export function JobRecommendations({ data }: JobRecommendationsProps) {
   const [jobs, setJobs] = useState<Job[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleFindJobs = async () => {
+  const fetchJobs = async () => {
     setIsLoading(true)
     try {
-      const jobResults = await getJobRecommendations(data.targetField, workMode, minSalary, jobCount)
+      const jobResults = await getJobRecommendations(data.likelyField, workMode, minSalary, jobCount)
       setJobs(jobResults)
     } catch (error) {
       console.error("Error fetching jobs:", error)
@@ -33,12 +33,20 @@ export function JobRecommendations({ data }: JobRecommendationsProps) {
     }
   }
 
+  // Load jobs automatically when component mounts or filters change
+  useEffect(() => {
+    fetchJobs()
+  }, [data.likelyField, workMode, minSalary, jobCount])
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Job Recommendations</CardTitle>
-          <CardDescription>Find jobs that match your skills and experience in {data.targetField}</CardDescription>
+          <CardTitle className="flex items-center justify-between">
+            <span>Job Recommendations</span>
+            {isLoading && <RefreshCw className="h-4 w-4 animate-spin text-blue-500" />}
+          </CardTitle>
+          <CardDescription>Jobs that match your skills and experience in {data.likelyField}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -79,14 +87,10 @@ export function JobRecommendations({ data }: JobRecommendationsProps) {
               </div>
             </div>
           </div>
-
-          <Button className="w-full bg-rose-500 hover:bg-rose-600" onClick={handleFindJobs} disabled={isLoading}>
-            {isLoading ? "Finding jobs..." : "Find Jobs"}
-          </Button>
         </CardContent>
       </Card>
 
-      {jobs.length > 0 && (
+      {jobs.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {jobs.map((job, index) => (
             <Card key={index}>
@@ -124,6 +128,12 @@ export function JobRecommendations({ data }: JobRecommendationsProps) {
             </Card>
           ))}
         </div>
+      ) : !isLoading && (
+        <Card className="bg-gray-50">
+          <CardContent className="p-6 text-center text-gray-500">
+            No matching jobs found. Try adjusting your filters.
+          </CardContent>
+        </Card>
       )}
     </div>
   )

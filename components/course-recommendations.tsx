@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, BookOpen, Clock, Star } from "lucide-react"
+import { ExternalLink, BookOpen, Clock, Star, RefreshCw } from "lucide-react"
 import { getCourseRecommendations } from "@/lib/course-service"
 import type { ResumeData, Course } from "@/lib/types"
 
@@ -17,10 +17,10 @@ export function CourseRecommendations({ data }: CourseRecommendationsProps) {
   const [courses, setCourses] = useState<Course[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleGetCourses = async () => {
+  const fetchCourses = async () => {
     setIsLoading(true)
     try {
-      const courseResults = await getCourseRecommendations(data.targetField, courseCount)
+      const courseResults = await getCourseRecommendations(data.likelyField, courseCount)
       setCourses(courseResults)
     } catch (error) {
       console.error("Error fetching courses:", error)
@@ -29,12 +29,20 @@ export function CourseRecommendations({ data }: CourseRecommendationsProps) {
     }
   }
 
+  // Load courses automatically when component mounts or count changes
+  useEffect(() => {
+    fetchCourses()
+  }, [data.likelyField, courseCount])
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Course Recommendations</CardTitle>
-          <CardDescription>Courses to help you improve your skills in {data.targetField}</CardDescription>
+          <CardTitle className="flex items-center justify-between">
+            <span>Course Recommendations</span>
+            {isLoading && <RefreshCw className="h-4 w-4 animate-spin text-blue-500" />}
+          </CardTitle>
+          <CardDescription>Courses to help you improve your skills in {data.likelyField}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
@@ -50,14 +58,10 @@ export function CourseRecommendations({ data }: CourseRecommendationsProps) {
               <div className="mt-1 text-right text-sm">{courseCount} courses</div>
             </div>
           </div>
-
-          <Button className="w-full bg-rose-500 hover:bg-rose-600" onClick={handleGetCourses} disabled={isLoading}>
-            {isLoading ? "Finding courses..." : "Get Course Recommendations"}
-          </Button>
         </CardContent>
       </Card>
 
-      {courses.length > 0 && (
+      {courses.length > 0 ? (
         <div className="space-y-4">
           {courses.map((course, index) => (
             <Card key={index}>
@@ -95,6 +99,12 @@ export function CourseRecommendations({ data }: CourseRecommendationsProps) {
             </Card>
           ))}
         </div>
+      ) : !isLoading && (
+        <Card className="bg-gray-50">
+          <CardContent className="p-6 text-center text-gray-500">
+            No courses found. Try adjusting the number of recommendations.
+          </CardContent>
+        </Card>
       )}
     </div>
   )

@@ -1,29 +1,75 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, BarChart3, BookOpen, BriefcaseIcon, MessageSquare, Upload, Star, Sparkles, Zap, FileText, CheckCircle } from "lucide-react"
+import SkillGPT from "@/components/Chatbot"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-rose-500 to-orange-500">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-600 to-indigo-700">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
-                SkillBridge
-              </h1>
-              <p className="mx-auto max-w-[700px] text-white md:text-xl">
-                Your Smart Resume Analyzer. Upload your resume and get personalized recommendations.
-              </p>
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+            <div className="flex flex-col space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Zap className="h-8 w-8 text-white" />
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl/none text-white">
+                    SkillBridge
+                  </h1>
+                </div>
+                <p className="max-w-[600px] text-white md:text-xl/relaxed lg:text-xl/relaxed">
+                  Your intelligent career assistant. Get personalized career advice, skill recommendations, and job matches.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link href="/dashboard">
+                  <Button className="bg-white text-blue-600 hover:bg-gray-100">
+                    Get Started
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link href="/skillgpt">
+                  <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10">
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Try SkillGPT
+                  </Button>
+                </Link>
+              </div>
             </div>
-            <div className="space-x-4">
-              <Link href="/login">
-                <Button className="bg-white text-rose-500 hover:bg-gray-100">
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+            <div className="flex items-center justify-center">
+              <div className="relative w-full max-w-[500px]">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl blur-3xl opacity-20"></div>
+                <div className="relative bg-white rounded-xl shadow-xl overflow-hidden">
+                  <div className="p-5 border-b">
+                    <h3 className="text-lg font-semibold flex items-center">
+                      <FileText className="mr-2 h-5 w-5 text-blue-500" />
+                      Resume Analysis
+                    </h3>
+                  </div>
+                  <div className="p-5 space-y-4">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <span className="text-sm">98% match for Senior Developer roles</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <span className="text-sm">8 key skills identified</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <span className="text-sm">3 recommended skill improvements</span>
+                    </div>
+                    <div className="bg-blue-50 text-blue-700 p-3 rounded-lg text-sm flex items-start">
+                      <Sparkles className="h-5 w-5 text-blue-500 mr-2 mt-0.5" />
+                      <div>
+                        <p className="font-medium">AI Recommendation</p>
+                        <p className="text-sm mt-1">Add more quantifiable achievements to strengthen your impact statements.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -32,75 +78,84 @@ export default function Home() {
       {/* Features Section */}
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-8 h-8 text-rose-500"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
-                  />
-                </svg>
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <div className="inline-block rounded-lg bg-blue-100 px-3 py-1 text-sm text-blue-700">
+                Features
+              </div>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Accelerate Your Career
+              </h2>
+              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                SkillBridge provides the tools and insights you need to advance your career and stand out in the job market.
+              </p>
+            </div>
+          </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-12">
+            <div className="flex flex-col items-start space-y-4 rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+                <Upload className="h-6 w-6 text-blue-600" />
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-bold">Resume Analysis</h3>
                 <p className="text-muted-foreground">
-                  Upload your resume and get detailed insights about your skills and experience.
+                  Get personalized feedback on your resume and suggestions for improvement.
                 </p>
               </div>
             </div>
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-8 h-8 text-rose-500"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
-                  />
-                </svg>
+            <div className="flex flex-col items-start space-y-4 rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
+                <MessageSquare className="h-6 w-6 text-indigo-600" />
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-bold">Skill Recommendations</h3>
+                <h3 className="text-xl font-bold">SkillGPT</h3>
                 <p className="text-muted-foreground">
-                  Get personalized skill recommendations based on your career field.
+                  Chat with our AI assistant to get personalized career advice and guidance.
                 </p>
               </div>
             </div>
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-8 h-8 text-rose-500"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z"
-                  />
-                </svg>
+            <div className="flex flex-col items-start space-y-4 rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                <BriefcaseIcon className="h-6 w-6 text-green-600" />
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-bold">Job Matching</h3>
-                <p className="text-muted-foreground">Find job opportunities that match your skills and experience.</p>
+                <p className="text-muted-foreground">
+                  Find jobs that match your skills and experience with our AI-powered job search.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-start space-y-4 rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
+                <BookOpen className="h-6 w-6 text-purple-600" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold">Learning Paths</h3>
+                <p className="text-muted-foreground">
+                  Discover courses and resources to help you acquire in-demand skills.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-start space-y-4 rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100">
+                <BarChart3 className="h-6 w-6 text-orange-600" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold">Skill Analysis</h3>
+                <p className="text-muted-foreground">
+                  Track your progress and see how your skills match up against industry standards.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-start space-y-4 rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+                <Star className="h-6 w-6 text-red-600" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold">Career Planning</h3>
+                <p className="text-muted-foreground">
+                  Build a roadmap for your career with tailored advice and step-by-step guidance.
+                </p>
               </div>
             </div>
           </div>
@@ -108,26 +163,32 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-blue-600">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Ready to boost your career?</h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl">
-                Join SkillBridge today and get personalized recommendations to improve your resume.
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-white">Ready to advance your career?</h2>
+              <p className="mx-auto max-w-[600px] text-white md:text-xl/relaxed">
+                Join SkillBridge today and get personalized recommendations to improve your resume and boost your career.
               </p>
             </div>
-            <div className="space-x-4">
-              <Link href="/register">
-                <Button className="bg-rose-500 text-white hover:bg-rose-600">Sign Up Now</Button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link href="/dashboard">
+                <Button className="bg-white text-blue-600 hover:bg-gray-100">Get Started Now</Button>
               </Link>
-              <Link href="/login">
-                <Button variant="outline">Login</Button>
+              <Link href="/skillgpt">
+                <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10">
+                  <Sparkles className="mr-2 h-4 w-4" />
+                  Try SkillGPT
+                </Button>
               </Link>
             </div>
           </div>
         </div>
       </section>
+      
+      {/* Add SkillGPT floating button */}
+      <SkillGPT />
     </main>
   )
 }

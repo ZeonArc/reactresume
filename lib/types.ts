@@ -1,5 +1,5 @@
 export interface User {
-  id: number
+  id: string
   firstName: string
   lastName: string
   email: string
@@ -12,7 +12,7 @@ export interface ResumeData {
   skills: string[]
   experienceLevel: string
   score: number
-  targetField: string
+  likelyField: string
   matchConfidence: number
   recommendedSkills: string[]
 }
